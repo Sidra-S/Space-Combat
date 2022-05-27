@@ -5,15 +5,15 @@ pygame.init()
 
 window = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("Space Combat")
-icon = pygame.image.load("F:\\Project\\Rocket-Launch-clipart-png-image.png")
+icon = pygame.image.load("E:\\clg\\sem2\\Project\\Rocket-Launch-clipart-png-image.png")
 pygame.display.set_icon(icon)
 
 
 # background
-bg = pygame.image.load("F:\Project\\space1.v1.cropped.png")
+bg = pygame.image.load("E:\\clg\\sem2\Project\\space1.v1.cropped.png")
 
 # spaceship
-space_ship = pygame.image.load("F:\\Project\\ss.png")
+space_ship = pygame.image.load("E:\\clg\\sem2\\Project\\ss.png")
 space_ship = pygame.transform.scale(space_ship, (90, 100))
 SP_X = 360
 SP_Y = 480
@@ -25,7 +25,7 @@ def display_ship(x, y):
 
 
 #hijacked spaceship
-hij_ss = (pygame.image.load("F:\\Project\\Final HS.png"))
+hij_ss = (pygame.image.load("E:\\clg\\sem2\\Project\\Final HS.png"))
 hij_ss = pygame.transform.scale(hij_ss, (130,105))
 hij_ss_X = (random.randint(0, 800))
 hij_ss_Y = (random.randint(50, 150))
@@ -43,7 +43,7 @@ enemy_variable_pos_x = []
 enemy_variable_pos_y = []
 no_enemy = 6
 for i in range(no_enemy):
-    enemy.append(pygame.image.load("F:\Project\\Enemy.png"))
+    enemy.append(pygame.image.load("E:\\clg\\sem2\Project\\Enemy.png"))
     E_X.append(random.randint(0, 800))
     E_Y.append(random.randint(50, 150))
     enemy_variable_pos_x.append(4)
@@ -55,7 +55,7 @@ def display_enemy(x, y, i):
 
 
 # bullet
-bullet = pygame.image.load("F:\\Project\\b2.png")
+bullet = pygame.image.load("E:\\clg\\sem2\\Project\\b2.png")
 bullet = pygame.transform.scale(bullet, (60, 50))
 B_X = 0
 B_Y = 460
@@ -89,6 +89,8 @@ font = pygame.font.Font('freesansbold.ttf',32)
 X = 10
 Y = 10
 
+over = pygame.font.Font('freesansbold.ttf',75)
+
 def display_score(X,Y):
     s = font.render("Score : "+ str(score),True, (139,0,139))
     window.blit(s, (X,Y))
@@ -96,6 +98,12 @@ def display_score(X,Y):
 clock = pygame.time.Clock()
 
 font = pygame.font.Font(None, 25)
+
+def game_over():
+    for i in range(70):
+        g = over.render("GAME OVER!!! ", True, (139, 0, 139))
+        window.blit(g, (170, 200))
+
 
 frame_count = 0
 frame_rate = 60
@@ -222,11 +230,10 @@ while run:
 
         # Limit frames per second
     clock.tick(frame_rate)
-    if frame_count == 5500:
-        GAME_FONT = pygame.freetype.Font("freesansbold.ttf", 50)
-        GAME_FONT.render_to(window, (400, 350), "Game Over!", (139, 0, 139))
+    if frame_count == 5450:
+        game_over()
 
-    if frame_count == 5600:
+    if frame_count == 5500:
         pygame.quit()
 
     display_score(X,Y)
