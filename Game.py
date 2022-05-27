@@ -5,15 +5,15 @@ pygame.init()
 
 window = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("Space Combat")
-icon = pygame.image.load("E:\\clg\\sem2\\Project\\Rocket-Launch-clipart-png-image.png")
+icon = pygame.image.load("F:\\Project\\Rocket-Launch-clipart-png-image.png")
 pygame.display.set_icon(icon)
 
 
 # background
-bg = pygame.image.load("E:\\clg\\sem2\\Project\\space1.v1.cropped.png")
+bg = pygame.image.load("F:\Project\\space1.v1.cropped.png")
 
 # spaceship
-space_ship = pygame.image.load("E:\\clg\\sem2\\Project\\ss.png")
+space_ship = pygame.image.load("F:\\Project\\ss.png")
 space_ship = pygame.transform.scale(space_ship, (90, 100))
 SP_X = 360
 SP_Y = 480
@@ -25,15 +25,15 @@ def display_ship(x, y):
 
 
 #hijacked spaceship
-#hij_ss = (pygame.image.load("E:\\clg\\sem2\\Project\\hij_ss.png"))
-#hij_ss_X = (random.randint(0, 800))
-#hij_ss_Y = (random.randint(50, 150))
-#hij_ss_variable_pos_x = 20
-#hij_ss_variable_pos_y = 20
-#no_hij_ss = 2
+hij_ss = (pygame.image.load("F:\\Project\\Final HS.png"))
+hij_ss = pygame.transform.scale(hij_ss, (130,105))
+hij_ss_X = (random.randint(0, 800))
+hij_ss_Y = (random.randint(50, 150))
+hij_ss_variable_pos_x = 2
+hij_ss_variable_pos_y = 2
 
-#def display_hij_ss(x, y, i):
-    #window.blit(hij_ss[i], (x, y))
+def display_hij_ss(x, y):
+    window.blit(hij_ss, (x, y))
 
 # enemy
 enemy = []
@@ -41,9 +41,9 @@ E_X = []
 E_Y = []
 enemy_variable_pos_x = []
 enemy_variable_pos_y = []
-no_enemy = 7
+no_enemy = 6
 for i in range(no_enemy):
-    enemy.append(pygame.image.load("E:\\clg\\sem2\\Project\\Enemy.png"))
+    enemy.append(pygame.image.load("F:\Project\\Enemy.png"))
     E_X.append(random.randint(0, 800))
     E_Y.append(random.randint(50, 150))
     enemy_variable_pos_x.append(4)
@@ -55,7 +55,7 @@ def display_enemy(x, y, i):
 
 
 # bullet
-bullet = pygame.image.load("E:\\clg\\sem2\\Project\\b2.png")
+bullet = pygame.image.load("F:\\Project\\b2.png")
 bullet = pygame.transform.scale(bullet, (60, 50))
 B_X = 0
 B_Y = 460
@@ -66,6 +66,7 @@ b_state = False
 
 def fire_bullets(x, y):
     window.blit(bullet, (x, y))
+
 #collision
 def collision_detection(E_X,E_Y,B_X,B_Y):
     dist=math.sqrt(math.pow(E_X-B_X,2)+math.pow(E_Y-B_Y,2))
@@ -73,7 +74,16 @@ def collision_detection(E_X,E_Y,B_X,B_Y):
         return True
     else:
         return False
-#scorring sys
+
+#hij_ss collision
+def collision_hij(hij_ss_X,hij_ss_Y,B_X,B_Y):
+    dist=math.sqrt(math.pow(hij_ss_X-B_X,2)+math.pow(hij_ss_Y-B_Y,2))
+    if dist < 35:
+        return True
+    else:
+        return False
+
+#scoring sys
 score=0
 font = pygame.font.Font('freesansbold.ttf',32)
 X = 10
@@ -81,7 +91,7 @@ Y = 10
 
 def display_score(X,Y):
     s = font.render("Score : "+ str(score),True, (139,0,139))
-    window.blit(s , (X,Y))
+    window.blit(s, (X,Y))
 
 clock = pygame.time.Clock()
 
@@ -114,7 +124,8 @@ while run:
     if e.type == pygame.KEYUP:
             if e.key == pygame.K_RIGHT or e.key == pygame.K_LEFT:
                 s_ship_variable_pos = 0
-    # logic
+
+    # spaceship logic
     SP_X += s_ship_variable_pos
     if SP_X <= 0:
         SP_X = 0
@@ -131,6 +142,21 @@ while run:
         B_Y=480
         b_state=False
 
+    #hijack logic
+    hij_ss_X += hij_ss_variable_pos_x
+    if hij_ss_X <= 0:
+        hij_ss_X = 736
+    if hij_ss_X >= 736:
+        hij_ss_X = 5
+    display_hij_ss(hij_ss_X,hij_ss_Y)
+    if collision_hij(hij_ss_X, hij_ss_Y, B_X, B_Y):
+        B_Y = 480
+        score -= 3
+        print(score)
+        b_state = False
+
+        hij_ss_X = random.randint(0, 765)
+        hij_ss_Y = random.randint(50, 150)
 
     # enemy logic
     for i in range(no_enemy):
