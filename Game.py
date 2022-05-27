@@ -101,8 +101,8 @@ font = pygame.font.Font(None, 25)
 
 def game_over():
     for i in range(80):
-        g = over.render("GAME OVER!!! ", True, (139, 0, 139))
-        window.blit(g, (170, 200))
+        g = over.render("GAME OVER!!! ", True, (128, 0, 0))
+        window.blit(g, (150, 250))
 
 
 frame_count = 0
@@ -230,10 +230,10 @@ while run:
 
         # Limit frames per second
     clock.tick(frame_rate)
-    if frame_count == 5450:
+    if (frame_count >= 5450) and (frame_count <= 5520):
         game_over()
 
-    if frame_count == 5500:
+    if frame_count == 5520:
         pygame.quit()
 
     display_score(X,Y)
