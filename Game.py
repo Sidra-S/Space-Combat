@@ -100,7 +100,7 @@ clock = pygame.time.Clock()
 font = pygame.font.Font(None, 25)
 
 def game_over():
-    for i in range(70):
+    for i in range(80):
         g = over.render("GAME OVER!!! ", True, (139, 0, 139))
         window.blit(g, (170, 200))
 
